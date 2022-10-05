@@ -1,5 +1,5 @@
 """Generic LinkedList Implementation"""
-from typing import Optional
+from typing import Any, Optional
 
 
 class Node:
@@ -17,3 +17,24 @@ class Node:
         return (
             f"{self.__class__.__name__}(data={self.data}, next_item={self.next_item})"
         )
+
+
+class LinkedList:
+    def __init__(self, head: Optional[Any] = None):
+        if not isinstance(head, Node) and head is not None:
+            self.head = Node(head)
+        else:
+            self.head = head
+
+        self.last: Optional["Node"] = self.head
+
+        if self.head is not None:
+            self._size = 1
+        else:
+            self._size = 0
+
+    def __len__(self):
+        return self._size
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(head={self.head})"

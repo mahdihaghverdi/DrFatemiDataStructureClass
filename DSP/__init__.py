@@ -1,1 +1,1 @@
-from .datastructures.linkedlist import Node
+from .datastructures.linkedlist import LinkedList, Node
