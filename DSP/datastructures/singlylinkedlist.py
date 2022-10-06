@@ -3,11 +3,23 @@ from typing import Any, Iterator, Optional, Union
 
 
 class EmptyLinkedList(Exception):
+    """Is raised when the operation is not allowed on an empty linked list"""
+
     def __str__(self):
         return "SinglyLinkedList is empty"
 
 
 class Node:
+    """Simple node representation
+
+    each node is like:
+        --------------------
+        | data | next_item |
+        --------------------
+    in which the data is the actual data the node is containing and next_item
+    is a reference the next node.
+    """
+
     def __init__(self, data, next_item: Optional["Node"] = None):
         self.data = data
         self.next_item = next_item
@@ -25,6 +37,25 @@ class Node:
 
 
 class SinglyLinkedList:
+    """Singly Linked List implementation
+
+    Attributes:
+        head: is the head node of the linked list, defaults to None.
+        tail: is the tail node of the linked list, default to `head`.
+        _size: holds the size of linked list, size is the number of nodes which are connected to each other.
+
+    Methods:
+        append: adds a node to the end of the linked list, the newest node becomes the `tail`.
+        appendleft: add a node to the head of the linked list, the newses node becomes the `head`.
+        popleft: deletes and returns the head of the linked list.
+        removeleft: deletes the head of the linked list.
+
+    Behaviours:
+        len(): returns the size of the linked list.
+        iter(): returns an iterator of the data of linked list
+        singly_linked_list[start[, stop, step]]: works just like sequence types slices.
+    """
+
     def __init__(self, head: Optional[Any] = None):
         if not isinstance(head, Node) and head is not None:
             self.head = Node(head)
@@ -35,7 +66,6 @@ class SinglyLinkedList:
         else:
             self.head = head
             self._size = 0
-
         self.tail: Optional["Node"] = self.head
 
     def append(self, data: Any):
