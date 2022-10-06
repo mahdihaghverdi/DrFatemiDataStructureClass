@@ -1,10 +1,10 @@
-"""Generic LinkedList Implementation"""
+"""Generic SinglyLinkedList Implementation"""
 from typing import Any, Iterator, Optional, Union
 
 
 class EmptyLinkedList(Exception):
     def __str__(self):
-        return "LinkedList is empty"
+        return "SinglyLinkedList is empty"
 
 
 class Node:
@@ -24,7 +24,7 @@ class Node:
         )
 
 
-class LinkedList:
+class SinglyLinkedList:
     def __init__(self, head: Optional[Any] = None):
         if not isinstance(head, Node) and head is not None:
             self.head = Node(head)
@@ -39,11 +39,10 @@ class LinkedList:
         self.tail: Optional["Node"] = self.head
 
     def append(self, data: Any):
-        """Append a node to the end of LinkedList
+        """Append a node to the end of SinglyLinkedList
 
         If `data` is not a node: wrap it in a node.
         """
-
         # Check if we have a head or not
         # if no head is available -> head is None and tail is None too
         if self.head is None:
@@ -67,14 +66,13 @@ class LinkedList:
         self._size += 1
 
     def appendleft(self, data: Any):
-        """Append a node to the start of the LinkedList
+        """Append a node to the start of the SinglyLinkedList
 
         This node will be the `head`
         """
-
         # Check if we have a head or not
         # if no head is available -> head is Node and tail is None too
-        # then, we have to just append the data to out LinkedList :)
+        # then, we have to just append the data to out SinglyLinkedList :)
         if self.head is None:
             self.append(data)
             return
