@@ -106,6 +106,16 @@ class LinkedList:
         """
         self.popleft()
 
+    def __iter__(self):
+        if self.head is None:
+            raise EmptyLinkedList("LinkedList is empty")
+
+        data, next_item = self.head.data, self.head.next_item
+        yield data
+        while next_item is not None:
+            data, next_item = next_item.data, next_item.next_item
+            yield data
+
     def __len__(self):
         return self._size
 

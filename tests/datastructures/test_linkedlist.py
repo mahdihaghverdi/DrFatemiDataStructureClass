@@ -132,3 +132,15 @@ class TestLinkedList:
         _.append(2)
         _.removeleft()
         assert len(_) == 1
+
+    def test__iter__empty(self):
+        with pytest.raises(EmptyLinkedList):
+            _ = LinkedList()
+            next(iter(_))
+
+    def test__iter__non_empty(self):
+        _ = LinkedList()
+        for i in range(10):
+            _.append(i)
+
+        assert list(range(10)) == list(_)
