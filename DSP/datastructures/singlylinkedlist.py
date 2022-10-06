@@ -153,6 +153,7 @@ class SinglyLinkedList:
         to_return = None
 
         if isinstance(item, int):
+            item = item if item >= 0 else item + self._size
             if item == 0:
                 return self.head.data
 
@@ -165,7 +166,14 @@ class SinglyLinkedList:
                 return to_return
 
         # item is a slice by now
-        return [self[index] for index in range(item.start, item.stop, item.step)]
+        return [
+            self[index]
+            for index in range(
+                item.start if item.start >= 0 else self._size + item.start,
+                item.stop,
+                item.step,
+            )
+        ]
 
     def __len__(self):
         return self._size

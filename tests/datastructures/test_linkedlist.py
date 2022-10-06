@@ -173,6 +173,8 @@ class TestLinkedList:
         ):
             assert expected == _[index]
 
-        assert _[0:15:4] == _[0:15:4]
-        assert _[0:25:3] == _[0:25:3]
-        assert _[10:20:5] == _[10:20:5]
+        assert _[0:15:4] == list(string.ascii_lowercase[0:15:4])
+        assert _[0:25:3] == list(string.ascii_lowercase[0:25:3])
+        assert _[10:20:5] == list(string.ascii_lowercase[10:20:5])
+        assert _[-10] == string.ascii_lowercase[-10]
+        assert _[-10:2:-2] == list(string.ascii_lowercase[-10:2:-2])
