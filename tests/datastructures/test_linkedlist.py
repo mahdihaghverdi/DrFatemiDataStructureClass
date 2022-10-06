@@ -59,3 +59,9 @@ class TestLinkedList:
         _.append(1)
         assert len(_) == 1
         assert bool(_) is True
+
+    def test_append_not_empty_linkedlist(self):
+        _ = LinkedList(1)
+        _.append(2)
+        assert len(_) == 2
+        assert bool(_) is True
