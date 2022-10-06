@@ -28,11 +28,13 @@ class TestLinkedList:
     def test_basic_attrs(self):
         _ = LinkedList()
         assert _.head is None
+        assert _.tail is None
 
         _ = LinkedList(1)
         assert isinstance(_.head, Node)
         assert _.head.data == 1
         assert _.head.next_item is None
+        assert _.head == _.tail
 
     def test__len__(self):
         _ = LinkedList()

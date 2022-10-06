@@ -31,7 +31,7 @@ class LinkedList:
             self.head = head
             self._size = 0
 
-        self.last: Optional["Node"] = self.head
+        self.tail: Optional["Node"] = self.head
 
     def __len__(self):
         return self._size
