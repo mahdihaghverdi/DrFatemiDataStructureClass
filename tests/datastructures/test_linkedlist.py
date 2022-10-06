@@ -1,4 +1,6 @@
-from DSP import LinkedList, Node
+import pytest
+
+from DSP import EmptyLinkedList, LinkedList, Node
 
 
 class TestNode:
@@ -65,7 +67,7 @@ class TestLinkedList:
         _ = LinkedList(1)
         assert _
 
-    def test_append_empty_linkedlist(self):
+    def test_append_empty(self):
         _ = LinkedList()
         _.append(1)
         assert _.head == Node(1)
@@ -73,7 +75,7 @@ class TestLinkedList:
         assert len(_) == 1
         assert bool(_) is True
 
-    def test_append_not_empty_linkedlist(self):
+    def test_append_not_empty(self):
         _ = LinkedList(1)
         _.append(2)
         assert _.head == Node(1, Node(2))
@@ -81,7 +83,7 @@ class TestLinkedList:
         assert len(_) == 2
         assert bool(_) is True
 
-    def test_appendleft_empty_linkedlist(self):
+    def test_appendleft_empty(self):
         _ = LinkedList()
         _.appendleft(1)
         assert _.head == Node(1)
@@ -96,3 +98,20 @@ class TestLinkedList:
         assert _.tail == Node(1)
         assert len(_) == 2
         assert bool(_) is True
+
+    def test_popleft_empty(self):
+        _ = LinkedList()
+        with pytest.raises(EmptyLinkedList):
+            _.popleft()
+
+    def test_popleft_non_empty(self):
+        _ = LinkedList()
+        _.append(1)
+        assert _.popleft() == Node(1)
+        assert len(_) == 0
+
+        _ = LinkedList()
+        _.append(1)
+        _.append(2)
+        assert _.popleft() == Node(1, Node(2))
+        assert len(_) == 1

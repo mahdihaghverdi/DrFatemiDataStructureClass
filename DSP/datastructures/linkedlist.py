@@ -2,6 +2,10 @@
 from typing import Any, Optional
 
 
+class EmptyLinkedList(Exception):
+    pass
+
+
 class Node:
     def __init__(self, data, next_item: Optional["Node"] = None):
         self.data = data
@@ -83,6 +87,17 @@ class LinkedList:
             self.head = data
             self.head.next_item = former_head
         self._size += 1
+
+    def popleft(self):
+        """Pop the head"""
+        if self.head is None:
+            raise EmptyLinkedList("LinkedList is empty")
+
+        former_head = self.head
+        newer_head = self.head.next_item
+        self.head = newer_head
+        self._size -= 1
+        return former_head
 
     def __len__(self):
         return self._size
