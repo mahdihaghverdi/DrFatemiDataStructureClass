@@ -23,15 +23,15 @@ class LinkedList:
     def __init__(self, head: Optional[Any] = None):
         if not isinstance(head, Node) and head is not None:
             self.head = Node(head)
-        else:
+            self._size = 1
+        elif isinstance(head, Node):
             self.head = head
-
-        self.last: Optional["Node"] = self.head
-
-        if self.head is not None:
             self._size = 1
         else:
+            self.head = head
             self._size = 0
+
+        self.last: Optional["Node"] = self.head
 
     def __len__(self):
         return self._size
