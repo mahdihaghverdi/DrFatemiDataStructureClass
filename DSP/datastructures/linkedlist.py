@@ -1,9 +1,10 @@
 """Generic LinkedList Implementation"""
-from typing import Any, Optional
+from typing import Any, Iterator, Optional, Union
 
 
 class EmptyLinkedList(Exception):
-    pass
+    def __str__(self):
+        return "LinkedList is empty"
 
 
 class Node:
@@ -91,7 +92,7 @@ class LinkedList:
     def popleft(self):
         """Pop the head"""
         if self.head is None:
-            raise EmptyLinkedList("LinkedList is empty")
+            raise EmptyLinkedList()
 
         former_head = self.head
         newer_head = self.head.next_item
@@ -106,15 +107,37 @@ class LinkedList:
         """
         self.popleft()
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Any]:
         if self.head is None:
-            raise EmptyLinkedList("LinkedList is empty")
+            raise EmptyLinkedList()
 
         data, next_item = self.head.data, self.head.next_item
         yield data
         while next_item is not None:
             data, next_item = next_item.data, next_item.next_item
             yield data
+
+    def __getitem__(self, item: Union[int, slice]) -> Any:
+        if not self:
+            raise EmptyLinkedList()
+
+        self_iter = iter(self)
+        to_return = None
+
+        if isinstance(item, int):
+            if item == 0:
+                return self.head.data
+
+            for _ in range(item + 1):
+                try:
+                    to_return = next(self_iter)
+                except StopIteration:
+                    raise IndexError("Index out of range") from None
+            else:
+                return to_return
+
+        # item is a slice by now
+        return [self[index] for index in range(item.start, item.stop, item.step)]
 
     def __len__(self):
         return self._size

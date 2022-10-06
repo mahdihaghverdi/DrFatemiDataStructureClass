@@ -1,3 +1,5 @@
+import string
+
 import pytest
 
 from DSP import EmptyLinkedList, LinkedList, Node
@@ -144,3 +146,33 @@ class TestLinkedList:
             _.append(i)
 
         assert list(range(10)) == list(_)
+
+    def test__getitem__empty(self):
+        _ = LinkedList()
+        with pytest.raises(EmptyLinkedList):
+            _[2]
+
+        with pytest.raises(EmptyLinkedList):
+            _[2:4]
+
+    def test__getitem__non_empty(self):
+        _ = LinkedList()
+        for num in range(10):
+            _.append(num)
+
+        for expected in range(10):
+            assert expected == _[expected]
+
+        _ = LinkedList()
+        for char in string.ascii_lowercase:
+            _.append(char)
+
+        for index, expected in zip(
+            range(len(string.ascii_lowercase)),
+            string.ascii_lowercase,
+        ):
+            assert expected == _[index]
+
+        assert _[0:15:4] == _[0:15:4]
+        assert _[0:25:3] == _[0:25:3]
+        assert _[10:20:5] == _[10:20:5]
