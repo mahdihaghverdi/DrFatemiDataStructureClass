@@ -68,11 +68,31 @@ class TestLinkedList:
     def test_append_empty_linkedlist(self):
         _ = LinkedList()
         _.append(1)
+        assert _.head == Node(1)
+        assert _.head == _.tail
         assert len(_) == 1
         assert bool(_) is True
 
     def test_append_not_empty_linkedlist(self):
         _ = LinkedList(1)
         _.append(2)
+        assert _.head == Node(1, Node(2))
+        assert _.tail == Node(2)
+        assert len(_) == 2
+        assert bool(_) is True
+
+    def test_appendleft_empty_linkedlist(self):
+        _ = LinkedList()
+        _.appendleft(1)
+        assert _.head == Node(1)
+        assert _.head == _.tail
+        assert len(_) == 1
+        assert bool(_) is True
+
+    def test_appendleft_non_empty_linkedlist(self):
+        _ = LinkedList(1)
+        _.appendleft(2)
+        assert _.head == Node(2, Node(1))
+        assert _.tail == Node(1)
         assert len(_) == 2
         assert bool(_) is True

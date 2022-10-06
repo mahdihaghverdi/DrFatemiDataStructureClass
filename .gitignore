@@ -142,3 +142,4 @@ build
 
 # experiments
 experiments
+experiments/expr.py

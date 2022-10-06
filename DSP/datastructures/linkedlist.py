@@ -61,6 +61,29 @@ class LinkedList:
                 assert self.tail.next_item is None
         self._size += 1
 
+    def appendleft(self, data: Any):
+        """Append a node to the start of the LinkedList
+
+        This node will be the `head`
+        """
+
+        # Check if we have a head or not
+        # if no head is available -> head is Node and tail is None too
+        # then, we have to just append the data to out LinkedList :)
+        if self.head is None:
+            self.append(data)
+            return
+
+        former_head = self.head
+        if not isinstance(data, Node):
+            _ = Node(data)
+            self.head = _
+            self.head.next_item = former_head
+        else:
+            self.head = data
+            self.head.next_item = former_head
+        self._size += 1
+
     def __len__(self):
         return self._size
 
