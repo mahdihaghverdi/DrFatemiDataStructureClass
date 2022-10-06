@@ -99,6 +99,13 @@ class LinkedList:
         self._size -= 1
         return former_head
 
+    def removeleft(self):
+        """Remove the head and NOT return it
+
+        This method just calls `popleft` method but does not return the value returned by popleft.
+        """
+        self.popleft()
+
     def __len__(self):
         return self._size
 

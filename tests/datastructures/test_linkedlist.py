@@ -115,3 +115,20 @@ class TestLinkedList:
         _.append(2)
         assert _.popleft() == Node(1, Node(2))
         assert len(_) == 1
+
+    def test_removeleft_empty(self):
+        _ = LinkedList()
+        with pytest.raises(EmptyLinkedList):
+            _.removeleft()
+
+    def test_removeleft_non_empty(self):
+        _ = LinkedList()
+        _.append(1)
+        _.removeleft()
+        assert len(_) == 0
+
+        _ = LinkedList()
+        _.append(1)
+        _.append(2)
+        _.removeleft()
+        assert len(_) == 1
