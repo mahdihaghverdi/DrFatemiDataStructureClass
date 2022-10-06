@@ -9,8 +9,8 @@ class TestNode:
 
         _ = Node("Mahdi", next_item=Node(1))
         assert _.data == "Mahdi"
-        assert _.next_item.data == 1
-        assert _.next_item.next_item is None
+        assert _.next_item.data == 1  # noqa
+        assert _.next_item.next_item is None  # noqa
 
     def test__eq__(self):
         _ = Node("Mahdi")
@@ -35,6 +35,17 @@ class TestLinkedList:
         assert _.head.data == 1
         assert _.head.next_item is None
         assert _.head == _.tail
+
+    def test_attrs(self):
+        _ = LinkedList(1)
+        _.append(2)
+
+        assert _.head == Node(1, Node(2))
+        assert _.tail == Node(2)
+
+        _.append("Mahdi")
+        assert _.head == Node(1, Node(2, Node("Mahdi")))
+        assert _.tail == Node("Mahdi")
 
     def test__len__(self):
         _ = LinkedList()

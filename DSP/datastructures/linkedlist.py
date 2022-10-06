@@ -38,6 +38,7 @@ class LinkedList:
 
         If `data` is not a node: wrap it in a node.
         """
+
         # Check if we have a head or not
         # if no head is available -> head is None and tail is None too
         if self.head is None:
