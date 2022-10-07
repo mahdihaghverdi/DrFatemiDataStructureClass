@@ -150,10 +150,10 @@ class TestLinkedList:
     def test__getitem__empty(self):
         _ = SinglyLinkedList()
         with pytest.raises(EmptyLinkedList):
-            _[2]
+            _[2]  # noqa
 
         with pytest.raises(EmptyLinkedList):
-            _[2:4]
+            _[2:4]  # noqa
 
     def test__getitem__non_empty(self):
         _ = SinglyLinkedList()

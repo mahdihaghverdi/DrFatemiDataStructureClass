@@ -68,6 +68,49 @@ class SinglyLinkedList:
             self._size = 0
         self.tail: Optional["Node"] = self.head
 
+    def __iter__(self) -> Iterator[Any]:
+        if self.head is None:
+            raise EmptyLinkedList()
+
+        data, next_item = self.head.data, self.head.next_item
+        yield data
+        while next_item is not None:
+            data, next_item = next_item.data, next_item.next_item
+            yield data
+
+    def __getitem__(self, item: Union[int, slice]) -> Any:
+        if not self:
+            raise EmptyLinkedList()
+
+        self_iter = iter(self)
+        data = None
+
+        if isinstance(item, int):
+            item = item if item >= 0 else item + self._size
+            if item == 0:
+                return self.head.data
+
+            for _ in range(item + 1):
+                try:
+                    data = next(self_iter)
+                except StopIteration:
+                    raise IndexError("Index out of range") from None
+            else:
+                return data
+
+        # item is a slice now
+        return [
+            self[index]
+            for index in range(
+                item.start if item.start >= 0 else self._size + item.start,
+                item.stop,
+                item.step,
+            )
+        ]
+
+    def __len__(self):
+        return self._size
+
     def append(self, data: Any):
         """Append a node to the end of SinglyLinkedList
 
@@ -76,13 +119,7 @@ class SinglyLinkedList:
         # Check if we have a head or not
         # if no head is available -> head is None and tail is None too
         if self.head is None:
-            if not isinstance(data, Node):
-                _ = Node(data)
-                self.head = _
-                self.tail = self.head
-            else:
-                self.head = data
-                self.tail = self.head
+            self.tail = self.head = data if isinstance(data, Node) else Node(data)
         else:
             if not isinstance(data, Node):
                 _ = Node(data)
@@ -109,8 +146,7 @@ class SinglyLinkedList:
 
         former_head = self.head
         if not isinstance(data, Node):
-            _ = Node(data)
-            self.head = _
+            self.head = Node(data)
             self.head.next_item = former_head
         else:
             self.head = data
@@ -134,49 +170,6 @@ class SinglyLinkedList:
         This method just calls `popleft` method but does not return the value returned by popleft.
         """
         self.popleft()
-
-    def __iter__(self) -> Iterator[Any]:
-        if self.head is None:
-            raise EmptyLinkedList()
-
-        data, next_item = self.head.data, self.head.next_item
-        yield data
-        while next_item is not None:
-            data, next_item = next_item.data, next_item.next_item
-            yield data
-
-    def __getitem__(self, item: Union[int, slice]) -> Any:
-        if not self:
-            raise EmptyLinkedList()
-
-        self_iter = iter(self)
-        to_return = None
-
-        if isinstance(item, int):
-            item = item if item >= 0 else item + self._size
-            if item == 0:
-                return self.head.data
-
-            for _ in range(item + 1):
-                try:
-                    to_return = next(self_iter)
-                except StopIteration:
-                    raise IndexError("Index out of range") from None
-            else:
-                return to_return
-
-        # item is a slice by now
-        return [
-            self[index]
-            for index in range(
-                item.start if item.start >= 0 else self._size + item.start,
-                item.stop,
-                item.step,
-            )
-        ]
-
-    def __len__(self):
-        return self._size
 
     def __repr__(self):
         return f"{self.__class__.__name__}(head={self.head})"
