@@ -57,11 +57,8 @@ class SinglyLinkedList:
     """
 
     def __init__(self, head: Optional[Any] = None):
-        if not isinstance(head, Node) and head is not None:
-            self.head = Node(head)
-            self._size = 1
-        elif isinstance(head, Node):
-            self.head = head
+        if head is not None:
+            self.head = _ensure_node(head)
             self._size = 1
         else:
             self.head = head
@@ -116,6 +113,7 @@ class SinglyLinkedList:
 
         If `data` is not a node: wrap it in a node.
         """
+
         # Check if we have a head or not
         # if no head is available -> head is None and tail is None too
         if self.head is None:
@@ -137,6 +135,7 @@ class SinglyLinkedList:
 
         This node will be the `head`
         """
+
         # Check if we have a head or not
         # if no head is available -> head is Node and tail is None too
         # then, we have to just append the data to out SinglyLinkedList :)
@@ -173,3 +172,9 @@ class SinglyLinkedList:
 
     def __repr__(self):
         return f"{self.__class__.__name__}(head={self.head})"
+
+
+def _ensure_node(data: Any) -> "Node":
+    if isinstance(data, Node):
+        return data
+    return Node(data)

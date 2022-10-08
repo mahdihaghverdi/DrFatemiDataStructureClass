@@ -1,8 +1,12 @@
+import pathlib
 import string
+import sys
 
 import pytest
 
-from DSP import EmptyLinkedList, Node, SinglyLinkedList
+sys.path += [str(pathlib.Path(__file__).parent.parent.parent)]
+
+from DSP import EmptyLinkedList, Node, SinglyLinkedList  # noqa
 
 
 class TestNode:
