@@ -116,18 +116,13 @@ class SinglyLinkedList:
 
         # Check if we have a head or not
         # if no head is available -> head is None and tail is None too
+        data = _ensure_node(data)
         if self.head is None:
-            self.tail = self.head = data if isinstance(data, Node) else Node(data)
+            self.tail = self.head = data
         else:
-            if not isinstance(data, Node):
-                _ = Node(data)
-                self.tail.next_item = _
-                self.tail = _
-                assert self.tail.next_item is None
-            else:
-                self.tail.next_item = data
-                self.tail = data
-                assert self.tail.next_item is None
+            self.tail.next_item = data
+            self.tail = data
+            assert self.tail.next_item is None
         self._size += 1
 
     def appendleft(self, data: Any):
