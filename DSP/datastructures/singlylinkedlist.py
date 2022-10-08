@@ -54,6 +54,7 @@ class SinglyLinkedList:
         len(): returns the size of the linked list.
         iter(): returns an iterator of the data of linked list
         singly_linked_list[start[, stop, step]]: works just like sequence types slices.
+        Something in singly_linked_list
     """
 
     def __init__(self, head: Optional[Any] = None):
@@ -138,13 +139,10 @@ class SinglyLinkedList:
             self.append(data)
             return
 
+        data = _ensure_node(data)
         former_head = self.head
-        if not isinstance(data, Node):
-            self.head = Node(data)
-            self.head.next_item = former_head
-        else:
-            self.head = data
-            self.head.next_item = former_head
+        self.head = data
+        self.head.next_item = former_head
         self._size += 1
 
     def popleft(self):
