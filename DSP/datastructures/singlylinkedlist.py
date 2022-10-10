@@ -1,4 +1,5 @@
 """Generic SinglyLinkedList Implementation"""
+from collections.abc import Sequence
 from typing import Any, Iterator, Optional, Union
 
 
@@ -36,7 +37,7 @@ class Node:
         )
 
 
-class SinglyLinkedList:
+class SinglyLinkedList(Sequence):
     """Singly Linked List implementation
 
     Attributes:
@@ -162,6 +163,36 @@ class SinglyLinkedList:
         This method just calls `popleft` method but does not return the value returned by popleft.
         """
         self.popleft()
+
+    def insert(self, index: int, data: Any):
+        """Insert a node at the given
+
+        >>> a = [1]
+        >>> a.insert(0, 0)
+        >>> # a -> [0, 1]
+        """
+
+        if self._size == 0:
+            self.append(data)
+            return
+
+        # if index == 0: it will be inserted at the head
+        if index == 0:
+            self.appendleft(data)
+            return
+
+        where_data = self[index]
+        former_node = self.head
+
+        while True:
+            if former_node.next_item.data == where_data:
+                _ = _ensure_node(data)
+                later_node = former_node.next_item
+                former_node.next_item = _
+                _.next_item = later_node
+                self._size += 1
+                return
+            former_node = former_node.next_item
 
     def __repr__(self):
         return f"{self.__class__.__name__}(head={self.head})"

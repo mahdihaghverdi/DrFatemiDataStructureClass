@@ -139,6 +139,53 @@ class TestLinkedList:
         _.removeleft()
         assert len(_) == 1
 
+    def test_insert_empty(self):
+        _ = SinglyLinkedList()
+        _.insert(0, 1)
+        assert len(_) == 1
+        assert _.head.data == 1
+        assert _.head.next_item is None
+        assert _.head == _.tail
+
+        _ = SinglyLinkedList()
+        _.insert(10, 1)
+        assert len(_) == 1
+        assert _.head.data == 1
+        assert _.head.next_item is None
+        assert _.head == _.tail
+
+    def test_insert_non_empty_error(self):
+        with pytest.raises(IndexError):
+            _ = SinglyLinkedList(1)
+            _.insert(1, 0)
+
+    def test_insert_non_empty(self):
+        # at head
+        _ = SinglyLinkedList(1)
+        _.insert(0, 0)
+        assert len(_) == 2
+        assert _.head.data == 0
+        assert _.tail.data == 1
+
+        # other places
+        _ = SinglyLinkedList(1)
+        _.append(2)
+        _.insert(1, "Mahdi")
+        assert len(_) == 3
+        assert _[1] == "Mahdi"
+        assert _[2] == 2
+
+        _ = SinglyLinkedList()
+        for num in range(10):
+            _.append(num)
+
+        # 0123456789
+        _.insert(4, "Mahdi")
+        assert len(_) == 11
+        assert _[3] == 3
+        assert _[4] == "Mahdi"
+        assert _[5] == 4
+
     def test__iter__empty(self):
         with pytest.raises(EmptyLinkedList):
             _ = SinglyLinkedList()
