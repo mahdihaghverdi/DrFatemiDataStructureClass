@@ -25,6 +25,16 @@ class DoublyLinkedList(Sequence):
             self._size = 0
         self.tail: Optional["DNode"] = self.head
 
+    def __iter__(self) -> Iterator[Any]:
+        if self.head is None:
+            raise EmptyLinkedList()
+
+        data, next_item = self.head.data, self.head.next_item
+        yield data
+        while next_item is not None:
+            data, next_item = next_item.data, next_item.next_item
+            yield data
+
     def __getitem__(self, index: int | slice):
         pass
 

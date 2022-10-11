@@ -41,6 +41,12 @@ class TestDoublyLinkedList:
         _ = DoublyLinkedList(1)
         assert len(_) == 1
 
+        _ = DoublyLinkedList()
+        for num in range(10):
+            _.append(num)
+
+        assert len(_) == 10
+
     def test__bool__(self):
         _ = DoublyLinkedList()
         assert not _
@@ -105,3 +111,10 @@ class TestDoublyLinkedList:
         assert _.tail.data == 1
         assert _.tail.next_item is None
         assert _.tail.prev_item.data == 0
+
+    def test__iter__(self):
+        _ = DoublyLinkedList()
+        for num in range(10):
+            _.append(num)
+
+        assert list(range(10)) == list(_)
