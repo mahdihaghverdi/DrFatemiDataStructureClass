@@ -1,8 +1,8 @@
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Iterator, Optional
+from typing import Any, Optional
 
-from .singlylinkedlist import EmptyLinkedList
+from .generallinkedlist import LinkedList
 
 
 @dataclass
@@ -15,7 +15,7 @@ class DNode:
         return hash((self.data, self.prev_item, self.next_item))
 
 
-class DoublyLinkedList(Sequence):
+class DoublyLinkedList(LinkedList, Sequence):
     def __init__(self, head: Optional[Any] = None):
         if head is not None:
             self.head = _ensure_dnode(head)
@@ -24,16 +24,6 @@ class DoublyLinkedList(Sequence):
             self.head = head
             self._size = 0
         self.tail: Optional["DNode"] = self.head
-
-    def __iter__(self) -> Iterator[Any]:
-        if self.head is None:
-            raise EmptyLinkedList()
-
-        data, next_item = self.head.data, self.head.next_item
-        yield data
-        while next_item is not None:
-            data, next_item = next_item.data, next_item.next_item
-            yield data
 
     def __getitem__(self, index: int | slice):
         pass

@@ -3,12 +3,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any, Iterable, Iterator, Optional, Union
 
-
-class EmptyLinkedList(Exception):
-    """Is raised when the operation is not allowed on an empty linked list"""
-
-    def __str__(self):
-        return "SinglyLinkedList is empty"
+from .generallinkedlist import EmptyLinkedList, LinkedList
 
 
 @dataclass
@@ -30,7 +25,7 @@ class Node:
         return hash((self.data, self.next_item))
 
 
-class SinglyLinkedList(Sequence):
+class SinglyLinkedList(LinkedList, Sequence):
     """Singly Linked List implementation
 
     Attributes:
@@ -66,16 +61,6 @@ class SinglyLinkedList(Sequence):
             self.head = head
             self._size = 0
         self.tail: Optional["Node"] = self.head
-
-    def __iter__(self) -> Iterator[Any]:
-        if self.head is None:
-            raise EmptyLinkedList()
-
-        data, next_item = self.head.data, self.head.next_item
-        yield data
-        while next_item is not None:
-            data, next_item = next_item.data, next_item.next_item
-            yield data
 
     def __getitem__(self, item: Union[int, slice]) -> Any:
         if not self:
