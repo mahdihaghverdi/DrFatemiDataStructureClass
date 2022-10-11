@@ -1,6 +1,8 @@
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any, Iterator, Optional
+
+from .singlylinkedlist import EmptyLinkedList
 
 
 @dataclass
@@ -28,6 +30,25 @@ class DoublyLinkedList(Sequence):
 
     def __len__(self):
         return self._size
+
+    def append(self, data: Any):
+        """Append a Dnode to DoublyLinkedList
+
+        Ensure data is a Dnode.
+        """
+
+        data = _ensure_dnode(data)
+        if self.head is None:
+            self.tail = self.head = data
+        else:
+            self.tail.next_item = data
+            data.prev_item = self.tail
+            self.tail = data
+            assert self.tail.next_item is None
+        self._size += 1
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(head={self.head})"
 
 
 def _ensure_dnode(data: Any) -> "DNode":

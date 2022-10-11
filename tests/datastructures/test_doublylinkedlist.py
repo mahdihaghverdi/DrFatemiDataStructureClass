@@ -1,4 +1,9 @@
-from DSP import DNode, DoublyLinkedList
+import pathlib
+import sys
+
+sys.path += [str(pathlib.Path(__file__).parent.parent.parent)]
+
+from DSP import DNode, DoublyLinkedList  # noqa
 
 
 class TestDNode:
@@ -44,3 +49,29 @@ class TestDoublyLinkedList:
         _ = DoublyLinkedList(1)
         assert _
         assert bool(_) is True
+
+    def test_append_empty(self):
+        _ = DoublyLinkedList()
+        _.append(1)
+
+        assert len(_) == 1
+        assert _.head.data == 1
+        assert _.head.next_item is None
+        assert _.tail == _.head
+
+    def test_append(self):
+        _ = DoublyLinkedList(1)
+        _.append(2)
+
+        assert len(_) == 2
+        assert _.head.next_item.data == 2
+        assert _.head.next_item.next_item is None
+        assert _.head.next_item == _.tail
+        assert _.tail.prev_item == _.head
+
+        _.append(3)
+        assert len(_) == 3
+        assert _.tail.data == 3
+        assert _.tail.next_item is None
+        assert _.tail.prev_item.data == 2
+        assert _.tail.prev_item.next_item == _.tail
