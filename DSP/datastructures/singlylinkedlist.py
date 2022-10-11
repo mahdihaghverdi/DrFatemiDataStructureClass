@@ -1,5 +1,6 @@
 """Generic SinglyLinkedList Implementation"""
 from collections.abc import Sequence
+from dataclasses import dataclass
 from typing import Any, Iterator, Optional, Union
 
 
@@ -10,6 +11,7 @@ class EmptyLinkedList(Exception):
         return "SinglyLinkedList is empty"
 
 
+@dataclass
 class Node:
     """Simple node representation
 
@@ -21,20 +23,11 @@ class Node:
     is a reference the next node.
     """
 
-    def __init__(self, data, next_item: Optional["Node"] = None):
-        self.data = data
-        self.next_item = next_item
-
-    def __eq__(self, other):
-        return self.data == other.data and self.next_item == other.next_item
+    data: Any
+    next_item: Optional["Node"] = None
 
     def __hash__(self):
         return hash((self.data, self.next_item))
-
-    def __repr__(self):
-        return (
-            f"{self.__class__.__name__}(data={self.data}, next_item={self.next_item})"
-        )
 
 
 class SinglyLinkedList(Sequence):
