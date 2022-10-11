@@ -47,6 +47,23 @@ class DoublyLinkedList(Sequence):
             assert self.tail.next_item is None
         self._size += 1
 
+    def appendleft(self, data: Any):
+        """Append at the head of DoublyLinkedList
+
+        Ensure data is a Dnode
+        """
+
+        if self.head is None:
+            self.append(data)
+            return
+
+        data = _ensure_dnode(data)
+        former_head = self.head
+        self.head = data
+        self.head.next_item = former_head
+        former_head.prev_item = self.head
+        self._size += 1
+
     def __repr__(self):
         return f"{self.__class__.__name__}(head={self.head})"
 

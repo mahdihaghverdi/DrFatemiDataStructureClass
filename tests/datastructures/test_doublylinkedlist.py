@@ -75,3 +75,33 @@ class TestDoublyLinkedList:
         assert _.tail.next_item is None
         assert _.tail.prev_item.data == 2
         assert _.tail.prev_item.next_item == _.tail
+
+    def test_appendleft_empty(self):
+        _ = DoublyLinkedList()
+        _.appendleft(1)
+
+        assert len(_) == 1
+        assert _.head.data == 1
+        assert _.head.next_item is None
+        assert _.tail == _.head
+
+    def test_appendleft(self):
+        _ = DoublyLinkedList(1)
+        _.appendleft(0)
+
+        assert len(_) == 2
+        assert _.head.data == 0
+        assert _.head.next_item.data == 1
+        assert _.head.next_item.prev_item.data == 0
+        assert _.tail.data == 1
+        assert _.tail.next_item is None
+        assert _.tail.prev_item.data == 0
+
+        _.appendleft(-1)
+        assert len(_) == 3
+        assert _.head.data == -1
+        assert _.head.next_item.data == 0
+        assert _.head.next_item.prev_item.data == -1
+        assert _.tail.data == 1
+        assert _.tail.next_item is None
+        assert _.tail.prev_item.data == 0
