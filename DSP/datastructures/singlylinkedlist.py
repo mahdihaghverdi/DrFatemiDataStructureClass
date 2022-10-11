@@ -1,7 +1,7 @@
 """Generic SinglyLinkedList Implementation"""
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Iterator, Optional, Union
+from typing import Any, Iterable, Iterator, Optional, Union
 
 
 class EmptyLinkedList(Exception):
@@ -193,6 +193,10 @@ class SinglyLinkedList(Sequence):
                 self._size += 1
                 return
             former_node = former_node.next_item
+
+    def extend(self, data: Iterable):
+        for item in data:
+            self.append(_ensure_node(item))
 
     def __repr__(self):
         return f"{self.__class__.__name__}(head={self.head})"
