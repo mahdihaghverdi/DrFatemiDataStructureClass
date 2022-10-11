@@ -52,10 +52,17 @@ class SinglyLinkedList(Sequence):
         removeleft: deletes the head of the linked list.
 
     Behaviours:
-        len(): returns the size of the linked list.
-        iter(): returns an iterator of the data of linked list
-        singly_linked_list[start[, stop, step]]: works just like sequence types slices.
-        Something in singly_linked_list
+         '__eq__', '__ne__'
+         '__hash__',       hash(obj)
+         '__iter__',       iter(obj) (for i in obj)
+         '__getitem__',    obj[0], obj[:10]
+         '__contains__',   ob in obj, ob not in obj
+         '__init__',       SLL(...)
+         '__len__',        len(obj)
+         '__repr__',       print, repr
+         '__reversed__',   reversed(obj)
+         'count',          obj.count(ob)
+         'index',          obj.index(ob)
     """
 
     def __init__(self, head: Optional[Any] = None):
