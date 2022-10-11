@@ -176,8 +176,7 @@ class TestLinkedList:
         assert _[2] == 2
 
         _ = SinglyLinkedList()
-        for num in range(10):
-            _.append(num)
+        _.extend(range(10))
 
         # 0123456789
         _.insert(4, "Mahdi")
@@ -193,8 +192,7 @@ class TestLinkedList:
 
     def test__iter__non_empty(self):
         _ = SinglyLinkedList()
-        for i in range(10):
-            _.append(i)
+        _.extend(range(10))
 
         assert list(range(10)) == list(_)
 
@@ -208,15 +206,13 @@ class TestLinkedList:
 
     def test__getitem__non_empty(self):
         _ = SinglyLinkedList()
-        for num in range(10):
-            _.append(num)
+        _.extend(range(10))
 
         for expected in range(10):
             assert expected == _[expected]
 
         _ = SinglyLinkedList()
-        for char in string.ascii_lowercase:
-            _.append(char)
+        _.extend(string.ascii_lowercase)
 
         for index, expected in zip(
             range(len(string.ascii_lowercase)),
