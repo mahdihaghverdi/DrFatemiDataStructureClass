@@ -35,3 +35,12 @@ class TestDoublyLinkedList:
 
         _ = DoublyLinkedList(1)
         assert len(_) == 1
+
+    def test__bool__(self):
+        _ = DoublyLinkedList()
+        assert not _
+        assert bool(_) is False
+
+        _ = DoublyLinkedList(1)
+        assert _
+        assert bool(_) is True

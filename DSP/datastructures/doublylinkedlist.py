@@ -1,8 +1,6 @@
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Iterator, Optional
-
-from DSP import EmptyLinkedList
+from typing import Any, Optional
 
 
 @dataclass
