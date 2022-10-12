@@ -117,12 +117,22 @@ class TestLinkedList:
         assert not _
 
     def test_pop(self):
+        # nothing passed to `pop`
         _ = SinglyLinkedList()
         _.extend(range(10))
 
         got = [_.pop() for __ in range(5)]
         assert len(_) == 5
         assert got[-1] == 5
+
+        # `int` passed to pop (as a index)
+        _ = SinglyLinkedList()
+        _.extend(string.ascii_lowercase)
+
+        c = _.pop(2)
+        assert c == "c"
+        assert len(_) == len(string.ascii_lowercase) - 1
+        assert [char for char in string.ascii_lowercase if char != "c"] == list(_)
 
     def test_popleft_empty(self):
         _ = SinglyLinkedList()
@@ -132,13 +142,13 @@ class TestLinkedList:
     def test_popleft_non_empty(self):
         _ = SinglyLinkedList()
         _.append(1)
-        assert _.popleft() == Node(1)
+        assert _.popleft() == 1
         assert len(_) == 0
 
         _ = SinglyLinkedList()
         _.append(1)
         _.append(2)
-        assert _.popleft() == Node(1, Node(2))
+        assert _.popleft() == 1
         assert len(_) == 1
 
     def test_removeleft_empty(self):

@@ -3,11 +3,24 @@ from dataclasses import dataclass
 from typing import Any, Iterable, Iterator, Optional, Union, cast
 
 
-class EmptyLinkedList(Exception):
+class LinkedListError(Exception):
+    pass
+
+
+class EmptyLinkedList(LinkedListError):
     """Is raised when the operation is not allowed on an empty linked list"""
 
     def __str__(self):
         return "SinglyLinkedList is empty"
+
+
+class NotFoundDataError(LinkedListError):
+    def __init__(self, data: Any):
+        self.data = data
+        super().__init__(data)
+
+    def __str__(self):
+        return f"Data: {self.data} is not found in here!"
 
 
 class LinkedList:
@@ -76,7 +89,7 @@ class SinglyLinkedList(LinkedList, Sequence):
     Methods:
         append: adds a node to the end of the linked list, the newest node becomes the `tail`.
         appendleft: add a node to the head of the linked list, the newses node becomes the `head`.
-        pop: deletes and return the tail
+        pop: deletes and return the tail, or a desired index
         popleft: deletes and returns the head of the linked list.
         removeleft: deletes the head of the linked list.
 
@@ -163,22 +176,43 @@ class SinglyLinkedList(LinkedList, Sequence):
         self.head.next_item = former_head
         self._size += 1
 
-    def pop(self):
-        """Pop the tail"""
+    def pop(self, index: Optional[int] = None):
+        """Pop the tail, or a desired index of sll"""
         if len(self) == 0:
             raise EmptyLinkedList()
 
-        if len(self) == 1:
-            return self.popleft()
+        if index is None:
+            if len(self) == 1:
+                return self.popleft()
 
-        for node in self.iternodes():
-            if node.next_item == self.tail:
-                # this is the node before the tail:
-                to_ret = self.tail
-                self.tail = node
-                self.tail.next_item = None
-                self._size -= 1
-                return to_ret.data
+            for node in self.iternodes():
+                if node.next_item == self.tail:
+                    # this is the node before the tail:
+                    to_ret = self.tail
+                    self.tail = node
+                    self.tail.next_item = None
+                    self._size -= 1
+                    return to_ret.data
+
+        if isinstance(index, int):
+            if index == 0:
+                return self.popleft()
+
+            to_ret = self[index]  # may raise error :)
+
+            before_and_self_nodes = []
+
+            for idx, node in enumerate(self.iternodes()):
+                if idx == index - 1:
+                    before_and_self_nodes.append(node)
+                elif idx == index:
+                    before_and_self_nodes.append(node)
+
+            before_node, self_node = before_and_self_nodes
+            after_node = self_node.next_item
+            before_node.next_item = after_node
+            self._size -= 1
+            return to_ret
 
     def popleft(self):
         """Pop the head"""
@@ -189,7 +223,7 @@ class SinglyLinkedList(LinkedList, Sequence):
         newer_head = self.head.next_item
         self.head = newer_head
         self._size -= 1
-        return former_head
+        return former_head.data
 
     def removeleft(self):
         """Remove the head and NOT return it
