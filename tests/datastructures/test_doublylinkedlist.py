@@ -161,6 +161,14 @@ class TestDoublyLinkedList:
         assert len(_) == 5
         assert got[-1] == 4
 
+    def test_iternodes(self):
+        _ = DoublyLinkedList()
+        for num in range(10):
+            _.append(num)
+        nodes = list(_.iternodes())
+        assert len(nodes) == 10
+        assert all(isinstance(i, DNode) for i in nodes)
+
     def test__iter__(self):
         _ = DoublyLinkedList()
         for num in range(10):

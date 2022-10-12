@@ -204,6 +204,13 @@ class TestLinkedList:
         assert _[4] == "Mahdi"
         assert _[5] == 4
 
+    def test_iternodes(self):
+        _ = SinglyLinkedList()
+        _.extend(range(10))
+        nodes = list(_.iternodes())
+        assert len(nodes) == 10
+        assert all(isinstance(i, Node) for i in nodes)
+
     def test__iter__empty(self):
         with pytest.raises(EmptyLinkedList):
             _ = SinglyLinkedList()

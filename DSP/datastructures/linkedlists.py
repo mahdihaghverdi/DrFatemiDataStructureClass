@@ -25,14 +25,24 @@ class LinkedList:
         self.tail: Optional["Node"] = self.head
 
     def __iter__(self) -> Iterator[Any]:
-        if self.head is None:  # type: ignore
+        if self.head is None:
             raise EmptyLinkedList()
 
-        data, next_item = self.head.data, self.head.next_item  # type: ignore
+        data, next_item = self.head.data, self.head.next_item
         yield data
         while next_item is not None:
             data, next_item = next_item.data, next_item.next_item
             yield data
+
+    def iternodes(self):
+        if self.head is None:
+            raise EmptyLinkedList()
+
+        node, next_node = self.head, self.head.next_item
+        yield node
+        while next_node is not None:
+            node, next_node = next_node, next_node.next_item
+            yield node
 
 
 # Singly LinkedList implementation
@@ -116,16 +126,6 @@ class SinglyLinkedList(LinkedList, Sequence):
 
     def __len__(self):
         return self._size
-
-    def iternodes(self):
-        if self.head is None:
-            raise EmptyLinkedList()
-
-        node, next_node = self.head, self.head.next_item
-        yield node
-        while next_node is not None:
-            node, next_node = next_node, next_node.next_item
-            yield node
 
     def append(self, data: Any):
         """Append a node to the end of SinglyLinkedList
