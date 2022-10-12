@@ -91,6 +91,7 @@ class SinglyLinkedList(LinkedList, Sequence):
         appendleft: add a node to the head of the linked list, the newses node becomes the `head`.
         pop: deletes and return the tail, or a desired index
         popleft: deletes and returns the head of the linked list.
+        remove: just like pop but does not return.
         removeleft: deletes the head of the linked list.
 
     Behaviours:
@@ -224,6 +225,9 @@ class SinglyLinkedList(LinkedList, Sequence):
         self.head = newer_head
         self._size -= 1
         return former_head.data
+
+    def remove(self, index: Optional[int] = None):
+        self.pop(index)
 
     def removeleft(self):
         """Remove the head and NOT return it
