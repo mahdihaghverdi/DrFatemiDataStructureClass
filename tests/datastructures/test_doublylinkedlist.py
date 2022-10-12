@@ -1,9 +1,11 @@
 import pathlib
 import sys
 
+import pytest
+
 sys.path += [str(pathlib.Path(__file__).parent.parent.parent)]
 
-from DSP import DNode, DoublyLinkedList  # noqa
+from DSP import DNode, DoublyLinkedList, EmptyLinkedList  # noqa
 
 
 class TestDNode:
@@ -111,6 +113,33 @@ class TestDoublyLinkedList:
         assert _.tail.data == 1
         assert _.tail.next_item is None
         assert _.tail.prev_item.data == 0
+
+    def test_pop_empty(self):
+        with pytest.raises(EmptyLinkedList):
+            _ = DoublyLinkedList()
+            _.pop()
+
+    def test_pop_one_item(self):
+        _ = DoublyLinkedList(0)
+        got = _.pop()
+        assert 0 == got
+        assert len(_) == 0
+
+    def test_pop(self):
+        _ = DoublyLinkedList(0)
+        _.append(1)
+        assert _.pop() == 1
+        assert len(_) == 1
+
+        _ = DoublyLinkedList()
+        for num in range(10):
+            _.append(num)
+
+        _.pop()
+        _.pop()
+        last = _.pop()
+        assert len(_) == 7
+        assert last == 7
 
     def test__iter__(self):
         _ = DoublyLinkedList()

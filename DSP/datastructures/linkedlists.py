@@ -208,12 +208,6 @@ class SinglyLinkedList(LinkedList, Sequence):
         return f"{self.__class__.__name__}(head={self.head})"
 
 
-def _ensure_node(data: Any) -> "Node":
-    if isinstance(data, Node):
-        return data
-    return Node(data)
-
-
 # Doubly LinkedList implementation
 class DNode(Node):
     """Class to create a two-way node
@@ -248,12 +242,6 @@ class DoublyLinkedList(LinkedList, Sequence):
 
     """
 
-    def __getitem__(self, index: int | slice):
-        pass
-
-    def __len__(self):
-        return self._size
-
     def append(self, data: Any):
         """Append a Dnode to DoublyLinkedList
 
@@ -287,8 +275,42 @@ class DoublyLinkedList(LinkedList, Sequence):
         former_head.prev_item = cast("DNode", self.head)
         self._size += 1
 
+    def pop(self):
+        """Pop the tail"""
+        if len(self) == 0:
+            raise EmptyLinkedList()
+
+        if len(self) == 1:
+            # one dnode in out dll
+            to_ret = self.tail
+            self.head = self.tail = None
+            self._size -= 1
+            return to_ret.data
+
+        former_tail = self.tail
+        newest_tail = self.tail.prev_item
+        newest_tail.next_item = None
+        self.tail = newest_tail
+        self._size -= 1
+        return former_tail.data
+
+    def popleft(self):
+        """Pop the head"""
+
+    def __getitem__(self, index: int | slice):
+        pass
+
+    def __len__(self):
+        return self._size
+
     def __repr__(self):
         return f"{self.__class__.__name__}(head={self.head})"
+
+
+def _ensure_node(data: Any) -> "Node":
+    if isinstance(data, Node):
+        return data
+    return Node(data)
 
 
 def _ensure_dnode(data: Any) -> "DNode":
