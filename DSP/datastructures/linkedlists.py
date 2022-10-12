@@ -93,6 +93,8 @@ class SinglyLinkedList(LinkedList, Sequence):
         popleft: deletes and returns the head of the linked list.
         remove: just like pop but does not return.
         removeleft: deletes the head of the linked list.
+        insert: insert a data to a specific index
+        extend: just like list.extend
 
     Behaviours:
          '__eq__', '__ne__'
