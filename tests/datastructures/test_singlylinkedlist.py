@@ -105,6 +105,25 @@ class TestLinkedList:
         assert len(_) == 2
         assert bool(_) is True
 
+    def test_pop_empty(self):
+        with pytest.raises(EmptyLinkedList):
+            _ = SinglyLinkedList()
+            _.pop()
+
+    def test_pop_one(self):
+        _ = SinglyLinkedList(1)
+        assert _.pop() == 1
+        assert len(_) == 0
+        assert not _
+
+    def test_pop(self):
+        _ = SinglyLinkedList()
+        _.extend(range(10))
+
+        got = [_.pop() for __ in range(5)]
+        assert len(_) == 5
+        assert got[-1] == 5
+
     def test_popleft_empty(self):
         _ = SinglyLinkedList()
         with pytest.raises(EmptyLinkedList):

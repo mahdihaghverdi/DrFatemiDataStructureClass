@@ -66,6 +66,7 @@ class SinglyLinkedList(LinkedList, Sequence):
     Methods:
         append: adds a node to the end of the linked list, the newest node becomes the `tail`.
         appendleft: add a node to the head of the linked list, the newses node becomes the `head`.
+        pop: deletes and return the tail
         popleft: deletes and returns the head of the linked list.
         removeleft: deletes the head of the linked list.
 
@@ -116,6 +117,16 @@ class SinglyLinkedList(LinkedList, Sequence):
     def __len__(self):
         return self._size
 
+    def iternodes(self):
+        if self.head is None:
+            raise EmptyLinkedList()
+
+        node, next_node = self.head, self.head.next_item
+        yield node
+        while next_node is not None:
+            node, next_node = next_node, next_node.next_item
+            yield node
+
     def append(self, data: Any):
         """Append a node to the end of SinglyLinkedList
 
@@ -151,6 +162,23 @@ class SinglyLinkedList(LinkedList, Sequence):
         self.head = data
         self.head.next_item = former_head
         self._size += 1
+
+    def pop(self):
+        """Pop the tail"""
+        if len(self) == 0:
+            raise EmptyLinkedList()
+
+        if len(self) == 1:
+            return self.popleft()
+
+        for node in self.iternodes():
+            if node.next_item == self.tail:
+                # this is the node before the tail:
+                to_ret = self.tail
+                self.tail = node
+                self.tail.next_item = None
+                self._size -= 1
+                return to_ret.data
 
     def popleft(self):
         """Pop the head"""
