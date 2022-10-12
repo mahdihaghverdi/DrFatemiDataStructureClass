@@ -141,6 +141,26 @@ class TestDoublyLinkedList:
         assert len(_) == 7
         assert last == 7
 
+    def test_popleft_empty(self):
+        with pytest.raises(EmptyLinkedList):
+            _ = DoublyLinkedList()
+            _.popleft()
+
+    def test_popleft_one_item(self):
+        _ = DoublyLinkedList(0)
+        assert _.popleft() == 0
+        assert len(_) == 0
+        assert not _
+
+    def test_popleft(self):
+        _ = DoublyLinkedList()
+        for num in range(10):
+            _.append(num)
+
+        got = [_.popleft() for __ in range(5)]
+        assert len(_) == 5
+        assert got[-1] == 4
+
     def test__iter__(self):
         _ = DoublyLinkedList()
         for num in range(10):

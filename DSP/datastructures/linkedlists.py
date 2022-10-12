@@ -296,6 +296,18 @@ class DoublyLinkedList(LinkedList, Sequence):
 
     def popleft(self):
         """Pop the head"""
+        if len(self) == 0:
+            raise EmptyLinkedList()
+
+        if len(self) == 1:
+            return self.pop()
+
+        former_head = self.head
+        newest_head = self.head.next_item
+        newest_head.prev_item = None
+        self.head = newest_head
+        self._size -= 1
+        return former_head.data
 
     def __getitem__(self, index: int | slice):
         pass
