@@ -7,6 +7,18 @@ from .generallinkedlist import LinkedList
 
 @dataclass
 class DNode:
+    """Class to create a two-way node
+
+    each d-node is like:
+        --------------------------------
+        | prev_item | data | next_item |
+        -------------------------------
+
+    But the API is designed to instantiate a DNode as:
+    dnode = DNode(data, prev_item=None, next_item=None)
+    This is much better than DNode(prev_item, data, next_item=None)
+    """
+
     data: Any
     prev_item: Optional["DNode"] = None
     next_item: Optional["DNode"] = None
@@ -16,6 +28,19 @@ class DNode:
 
 
 class DoublyLinkedList(LinkedList, Sequence):
+    """Doubly Linked List implementation
+
+    Attributes:
+        head: the head of dll -> prev_item is always None, Default: None.
+        tail: the tail of dll -> next_item is always None, Default: `head`
+        _size holds the size of the dll
+
+    Methods:
+        append: adds a dnode to the end dll, the newest dnode becomes the tail
+        appendleft: adds a dnode to the head, the newest dnode becomes the head
+
+    """
+
     def __init__(self, head: Optional[Any] = None):
         if head is not None:
             self.head = _ensure_dnode(head)
