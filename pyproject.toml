@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "DSP"
+name = "dsp"
 version = "0.1.0"
 description = "All codes and answers related to data structure class of Dr. Fatemi"
 authors = ["Mahdi Haghverdi <mahdihaghverdiliewpl@gmail.com>"]
