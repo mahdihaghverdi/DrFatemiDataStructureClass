@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any, Iterable, Iterator, Optional, Union, cast
@@ -23,7 +24,7 @@ class NotFoundDataError(LinkedListError):
         return f"Data: {self.data} is not found in here!"
 
 
-class LinkedList:
+class LinkedList(ABC):
     def __init__(self, head: Optional[Any] = None):
         if head is not None:
             self.head = (
@@ -56,6 +57,20 @@ class LinkedList:
         while next_node is not None:
             node, next_node = next_node, next_node.next_item
             yield node
+
+    @abstractmethod
+    def pop(self, index: Optional[int] = None):
+        pass
+
+    @abstractmethod
+    def popleft(self):
+        pass
+
+    def remove(self, index: Optional[int] = None):
+        self.pop(index)
+
+    def removeleft(self):
+        self.popleft()
 
 
 # Singly LinkedList implementation
@@ -228,16 +243,6 @@ class SinglyLinkedList(LinkedList, Sequence):
         self._size -= 1
         return former_head.data
 
-    def remove(self, index: Optional[int] = None):
-        self.pop(index)
-
-    def removeleft(self):
-        """Remove the head and NOT return it
-
-        This method just calls `popleft` method but does not return the value returned by popleft.
-        """
-        self.popleft()
-
     def insert(self, index: int, data: Any):
         """Insert a node at the given
 
@@ -343,7 +348,7 @@ class DoublyLinkedList(LinkedList, Sequence):
         former_head.prev_item = cast("DNode", self.head)
         self._size += 1
 
-    def pop(self):
+    def pop(self, index: Optional[int] = None):
         """Pop the tail"""
         if len(self) == 0:
             raise EmptyLinkedList()
@@ -356,7 +361,7 @@ class DoublyLinkedList(LinkedList, Sequence):
             return to_ret.data
 
         former_tail = self.tail
-        newest_tail = self.tail.prev_item
+        newest_tail = cast(DNode, self.tail).prev_item
         newest_tail.next_item = None
         self.tail = newest_tail
         self._size -= 1
