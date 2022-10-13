@@ -125,7 +125,7 @@ class SinglyLinkedList(LinkedList, Sequence):
          'index',          obj.index(ob)
     """
 
-    def __getitem__(self, item: Union[int, slice]) -> Any:
+    def __getitem__(self, item: int | slice) -> Any:
         if not self:
             raise EmptyLinkedList()
 

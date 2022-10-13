@@ -5,7 +5,7 @@ import pytest
 
 sys.path += [str(pathlib.Path(__file__).parent.parent.parent)]
 
-from DSP import DNode, DoublyLinkedList, EmptyLinkedList  # noqa
+from dsp import DNode, DoublyLinkedList, EmptyLinkedList  # noqa
 
 
 class TestDNode:

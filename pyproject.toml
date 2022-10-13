@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "DSP"
+name = "dsp"
 version = "0.1.0"
 description = "All codes and answers related to data structure class of Dr. Fatemi"
 authors = ["Mahdi Haghverdi <mahdihaghverdiliewpl@gmail.com>"]
@@ -7,6 +7,7 @@ license = "Apache2.0"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+humanize = "^4.4.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.8.0"

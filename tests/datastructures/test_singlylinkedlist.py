@@ -6,7 +6,7 @@ import pytest
 
 sys.path += [str(pathlib.Path(__file__).parent.parent.parent)]
 
-from DSP import EmptyLinkedList, Node, SinglyLinkedList  # noqa
+from dsp import EmptyLinkedList, Node, SinglyLinkedList  # noqa
 
 
 class TestNode:
