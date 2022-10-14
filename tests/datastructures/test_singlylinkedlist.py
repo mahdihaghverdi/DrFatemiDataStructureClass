@@ -125,7 +125,7 @@ class TestLinkedList:
         assert len(_) == 5
         assert got[-1] == 5
 
-        # `int` passed to pop (as a index)
+        # `int` passed to pop (as an index)
         _ = SinglyLinkedList()
         _.extend(string.ascii_lowercase)
 

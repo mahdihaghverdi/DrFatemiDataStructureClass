@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Iterable, Iterator, Optional, Union, cast
+from typing import Any, Iterable, Iterator, Optional, cast
 
 
 class LinkedListError(Exception):
@@ -260,6 +260,11 @@ class SinglyLinkedList(LinkedList, Sequence):
             self.appendleft(data)
             return
 
+        # append it
+        if index == len(self) - 1:
+            self.append(data)
+            return
+
         where_data = self[index]
         former_node = self.head
 
@@ -281,7 +286,64 @@ class SinglyLinkedList(LinkedList, Sequence):
         return f"{self.__class__.__name__}(head={self.head})"
 
 
+# Circularly LinkedList implementation
+class CircularlyLinkedList(SinglyLinkedList, Sequence):
+    def __init__(self, data: Optional[Any] = None):
+        super().__init__(data)
+        if data is not None:
+            self.tail.next_item = self.head
+
+    def append(self, data: Any):
+        super().append(data)
+        self.tail.next_item = self.head
+
+    def appendleft(self, data: Any):
+        super().appendleft(data)
+        self.tail.next_item = self.head
+
+    def pop(self, index: Optional[int] = None):
+        """Pop the tail, or a desired index of sll"""
+        if len(self) == 0:
+            raise EmptyLinkedList()
+
+        if index is None:
+            got = super().pop(None)
+            self.tail.next_item = self.head
+            return got
+
+        if isinstance(index, int):
+            if index == 0:
+                return self.popleft()
+
+            to_ret = self[index]  # may raise error :)
+
+            before_and_self_nodes = []
+
+            for idx, node in enumerate(self.iternodes()):
+                if idx == len(self) + 1:
+                    break
+                if idx == index - 1:
+                    before_and_self_nodes.append(node)
+                elif idx == index:
+                    before_and_self_nodes.append(node)
+
+            before_node, self_node = before_and_self_nodes
+            after_node = self_node.next_item
+            before_node.next_item = after_node
+            self._size -= 1
+            self.tail.next_item = self.head
+
+            return to_ret
+
+    def popleft(self):
+        got = super().popleft()
+        self.tail.next_item = self.head
+        return got
+
+
 # Doubly LinkedList implementation
+
+
 class DNode(Node):
     """Class to create a two-way node
 
