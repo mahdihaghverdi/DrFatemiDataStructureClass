@@ -7,4 +7,5 @@ from .datastructures.linkedlists import (
     SinglyLinkedList,
 )
 from .exercises.binarylinkcheat import do as blc_do
+from .exercises.choice import SinglyLinkedList as CSinglyLinkedList
 from .exercises.thebiggestcheat import do, get
