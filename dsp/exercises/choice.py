@@ -302,19 +302,35 @@ def _ensure_node(data: Any) -> "Node":
 if __name__ == "__main__":
     objs = {}
 
+    prev_obj = None
     for line in sys.stdin:
-        op, obj = line.split()
+        if "KianList" in line or "peek" in line or "next" in line or "hasNext" in line:
+            op, obj = line.split()
 
-        if op == "KianList":
-            objs[obj] = SinglyLinkedList()
-            continue
+            if op == "KianList":
+                prev_obj = obj
+                objs[obj] = SinglyLinkedList()
+                continue
 
-        if op == "peek":
-            print(objs[obj].peek())
-            continue
+            if op == "peek":
+                got = objs.get(obj)
+                if got is None:
+                    continue
+                print(got.peek())
 
-        if op == "next":
-            pass
+            if op == "next":
+                got = objs.get(obj)
+                if got is None:
+                    continue
+                print(next(got))
 
-        if op == "hasNext":
-            pass
+            if op == "hasNext":
+                got = objs.get(obj)
+                if got is None:
+                    continue
+                print(True if got.pointer < len(got) else False)
+        else:
+            got = objs.get(prev_obj)
+            if got is None:
+                continue
+            got.extend(line.split())
