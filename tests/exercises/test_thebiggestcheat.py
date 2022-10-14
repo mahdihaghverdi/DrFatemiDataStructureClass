@@ -11,6 +11,13 @@ def test_add_no_overflow():
         assert (int(f) + int(s)) == do(get(f), get(s), "+")
 
 
+def test_add():
+    nums = [str(randint(1, 500)) for _ in range(500)]
+
+    for f, s in zip(nums, nums):
+        assert (int(f) + int(s)) == do(get(f), get(s), "+")
+
+
 def test_no_underflow_no_minus():
     firsts = [str(randint(25, 29)) for _ in range(50)] + [
         str(randint(53, 59)) for _ in range(50)
@@ -20,4 +27,11 @@ def test_no_underflow_no_minus():
     ]
 
     for f, s in zip(firsts, lasts):
+        assert (int(f) - int(s)) == do(get(f), get(s), "-")
+
+
+def test_sub():
+    nums = [str(randint(1, 500)) for _ in range(500)]
+
+    for f, s in zip(nums, nums):
         assert (int(f) - int(s)) == do(get(f), get(s), "-")
