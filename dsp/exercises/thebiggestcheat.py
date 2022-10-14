@@ -14,7 +14,7 @@ def get(num: str) -> "array[int]":
 
 def do(first: "array[int]", last: "array[int]", op: str) -> int:
     minus = False
-    if op == "-" and (len(last) > len(first)):
+    if op == "-" and last > first:
         first, last = last, first
         minus = True
 
@@ -34,12 +34,12 @@ def do(first: "array[int]", last: "array[int]", op: str) -> int:
     # 86 + 28: [14, 10]  -> [14 % 10, (14 // 10) + 10] = [4, 11]
     #                    -> [4, 11 % 10, (11 // 10) + 0] = [4, 1, 1] -> 114
 
-    if op == "+" and not all(num < 10 for num in result):
-        for idx, num in enumerate(result):
-            result[idx] = num % 10
-            try:
-                result[idx + 1] = (num // 10) + result[idx + 1]
-            except IndexError:
+    for idx, num in enumerate(result):
+        result[idx] = num % 10
+        try:
+            result[idx + 1] = (num // 10) + result[idx + 1]
+        except IndexError:
+            if op == "+":
                 result.append(0 + num // 10)
                 break
 
@@ -48,5 +48,5 @@ def do(first: "array[int]", last: "array[int]", op: str) -> int:
 
 
 if __name__ == "__main__":
-    first, op, last = get(input()), input(), get(input())
-    print(do(first, last, op))
+    fst, op_, lst = get(input()), input(), get(input())  # noqa
+    print(do(fst, lst, op_))

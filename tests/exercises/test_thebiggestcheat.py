@@ -35,3 +35,9 @@ def test_sub():
 
     for f, s in zip(nums, nums):
         assert (int(f) - int(s)) == do(get(f), get(s), "-")
+
+    firsts = [str(randint(100, 150)) for _ in range(100)]
+    lasts = [f"{randint(1, 9)}{randint(6, 9)}{randint(1, 9)}" for _ in range(100)]
+
+    for f, s in zip(firsts, lasts):
+        assert (int(f) - int(s)) == do(get(f), get(s), "-")
