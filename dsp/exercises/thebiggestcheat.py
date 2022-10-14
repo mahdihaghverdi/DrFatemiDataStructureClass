@@ -14,7 +14,9 @@ def get(num: str) -> "array[int]":
 
 def do(first: "array[int]", last: "array[int]", op: str) -> int:
     minus = False
-    if op == "-" and last > first:
+    if op == "-" and (
+        int("".join(str(i) for i in last)) > int("".join(str(i) for i in first))
+    ):
         first, last = last, first
         minus = True
 
@@ -48,5 +50,5 @@ def do(first: "array[int]", last: "array[int]", op: str) -> int:
 
 
 if __name__ == "__main__":
-    fst, op_, lst = get(input()), input(), get(input())  # noqa
+    fst, op_, lst = get(input()), input(), get(input())
     print(do(fst, lst, op_))
