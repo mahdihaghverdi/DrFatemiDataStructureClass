@@ -6,3 +6,4 @@ from .datastructures.linkedlists import (
     Node,
     SinglyLinkedList,
 )
+from .exercises.thebiggestcheat import do, get
