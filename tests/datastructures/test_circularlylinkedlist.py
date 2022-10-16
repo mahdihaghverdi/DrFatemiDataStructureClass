@@ -1,8 +1,12 @@
+import pathlib
 import string
+import sys
 
 import pytest
 
-from dsp import CircularlyLinkedList, EmptyLinkedList
+sys.path += [str(pathlib.Path(__file__).parent.parent.parent)]
+
+from dsp import CircularlyLinkedList, EmptyLinkedList  # noqa
 
 
 def test_basic_attrs():
@@ -71,42 +75,42 @@ def test_pop_one():
     assert not _
 
 
-def test_pop():
-    # nothing passed to `pop`
-    _ = CircularlyLinkedList()
-    _.extend(range(10))
-
-    got = [_.pop() for __ in range(5)]
-    assert len(_) == 5
-    assert got[-1] == 5
-
-    assert _.tail.data == 4
-    assert _.tail.next_item == _.head
-
-    # `int` passed to pop (as an index)
-    _ = CircularlyLinkedList()
-    _.extend(string.ascii_lowercase)
-
-    c = _.pop(2)
-    assert c == "c"
-    assert len(_) == len(string.ascii_lowercase) - 1
-    assert [char for char in string.ascii_lowercase if char != "c"] == list(_)
-
-
-def test_popleft_empty():
-    _ = CircularlyLinkedList()
-    with pytest.raises(EmptyLinkedList):
-        _.popleft()
-
-
-def test_popleft_non_empty():
-    _ = CircularlyLinkedList()
-    _.append(1)
-    assert _.popleft() == 1
-    assert len(_) == 0
-
-    _ = CircularlyLinkedList()
-    _.append(1)
-    _.append(2)
-    assert _.popleft() == 1
-    assert len(_) == 1
+# def test_pop():
+#     # nothing passed to `pop`
+#     _ = CircularlyLinkedList()
+#     _.extend(range(10))
+#
+#     got = [_.pop() for __ in range(5)]
+#     assert len(_) == 5
+#     assert got[-1] == 5
+#
+#     assert _.tail.data == 4
+#     assert _.tail.next_item == _.head
+#
+#     # `int` passed to pop (as an index)
+#     _ = CircularlyLinkedList()
+#     _.extend(string.ascii_lowercase)
+#
+#     c = _.pop(2)
+#     assert c == "c"
+#     assert len(_) == len(string.ascii_lowercase) - 1
+#     assert [char for char in string.ascii_lowercase if char != "c"] == list(_)
+#
+#
+# def test_popleft_empty():
+#     _ = CircularlyLinkedList()
+#     with pytest.raises(EmptyLinkedList):
+#         _.popleft()
+#
+#
+# def test_popleft_non_empty():
+#     _ = CircularlyLinkedList()
+#     _.append(1)
+#     assert _.popleft() == 1
+#     assert len(_) == 0
+#
+#     _ = CircularlyLinkedList()
+#     _.append(1)
+#     _.append(2)
+#     assert _.popleft() == 1
+#     assert len(_) == 1

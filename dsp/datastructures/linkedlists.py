@@ -260,11 +260,6 @@ class SinglyLinkedList(LinkedList, Sequence):
             self.appendleft(data)
             return
 
-        # append it
-        if index == len(self) - 1:
-            self.append(data)
-            return
-
         where_data = self[index]
         former_node = self.head
 
