@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Iterable, Iterator, Optional
+from typing import Any, Iterable, Iterator, Optional, Union
 
 
 class LinkedListError(Exception):
@@ -112,7 +112,7 @@ class SinglyLinkedList(LinkedList, Sequence):
          'index',          obj.index(ob)
     """
 
-    def __getitem__(self, item: int | slice) -> Any:
+    def __getitem__(self, item: Union[int, slice]) -> Any:
         if not self:
             raise EmptyLinkedList()
 
