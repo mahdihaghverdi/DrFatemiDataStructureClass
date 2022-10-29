@@ -12,7 +12,7 @@ class EmptyLinkedList(LinkedListError):
     """Is raised when the operation is not allowed on an empty linked list"""
 
     def __str__(self):
-        return "SinglyLinkedList is empty"
+        return "LinkedList is empty"
 
 
 class NotFoundDataError(LinkedListError):
