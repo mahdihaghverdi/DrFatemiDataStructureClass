@@ -10,3 +10,4 @@ from .datastructures.linkedlists import (
     SinglyLinkedList,
 )
 from .exercises.first.choice import SinglyLinkedList as CSinglyLinkedList
+from .exercises.second.ghostcost import do, max_sum, subseqs
