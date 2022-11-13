@@ -1,3 +1,5 @@
+from dsp.exercises.first.thebiggestcheat import do, get
+
 from .datastructures.linkedlists import (
     CircularlyLinkedList,
     DNode,
@@ -6,6 +8,3 @@ from .datastructures.linkedlists import (
     Node,
     SinglyLinkedList,
 )
-from .exercises.binarylinkcheat import do as blc_do
-from .exercises.choice import SinglyLinkedList as CSinglyLinkedList
-from .exercises.thebiggestcheat import do, get
