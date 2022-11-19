@@ -6,8 +6,12 @@ from .datastructures.linkedlists import (
     DNode,
     DoublyLinkedList,
     EmptyLinkedList,
+    IntDoublyLinkedList,
+    IntSinglyLinkedList,
     Node,
     SinglyLinkedList,
+    StrDoublyLinkedList,
+    StrSinglyLinkedList,
 )
 from .datastructures.stacks import IntStack, Stack, StrStack
 from .exercises.first.choice import SinglyLinkedList as CSinglyLinkedList

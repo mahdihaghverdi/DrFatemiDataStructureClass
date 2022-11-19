@@ -1,7 +1,16 @@
 from abc import ABC, abstractmethod
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Iterable, Iterator, Optional, cast
+from typing import (
+    Any,
+    Generic,
+    Iterable,
+    Iterator,
+    Optional,
+    TypeVar,
+    cast,
+    no_type_check,
+)
 
 
 class LinkedListError(Exception):
@@ -24,10 +33,13 @@ class NotFoundDataError(LinkedListError):
         return f"Data: {self.data} is not found in here!"
 
 
-class LinkedList(ABC):
-    def __init__(self, head: Optional[Any] = None):
+T = TypeVar("T")
+
+
+class LinkedList(Generic[T], ABC):
+    def __init__(self, head: Optional["T"] = None):
         if head is not None:
-            self.head = (
+            self.head: "Node[T]" = (
                 _ensure_node(head)
                 if isinstance(self, SinglyLinkedList)
                 else _ensure_dnode(head)
@@ -38,7 +50,7 @@ class LinkedList(ABC):
             self._size = 0
         self.tail: Optional["Node"] = self.head
 
-    def __iter__(self) -> Iterator[Any]:
+    def __iter__(self) -> Iterator[T]:
         if self.head is None:
             raise EmptyLinkedList()
 
@@ -48,7 +60,7 @@ class LinkedList(ABC):
             data, next_item = next_item.data, next_item.next_item
             yield data
 
-    def iternodes(self):
+    def iternodes(self) -> Iterator["Node[T]"]:
         if self.head is None:
             raise EmptyLinkedList()
 
@@ -59,23 +71,23 @@ class LinkedList(ABC):
             yield node
 
     @abstractmethod
-    def pop(self, index: Optional[int] = None):
+    def pop(self, index: Optional[int] = None) -> "T":
         pass
 
     @abstractmethod
-    def popleft(self):
+    def popleft(self) -> "T":
         pass
 
-    def remove(self, index: Optional[int] = None):
+    def remove(self, index: Optional[int] = None) -> None:
         self.pop(index)
 
-    def removeleft(self):
+    def removeleft(self) -> None:
         self.popleft()
 
 
 # Singly LinkedList implementation
 @dataclass
-class Node:
+class Node(Generic[T]):
     """Simple node representation
 
     each node is like:
@@ -93,7 +105,7 @@ class Node:
         return hash((self.data, self.next_item))
 
 
-class SinglyLinkedList(LinkedList, Sequence):
+class SinglyLinkedList(LinkedList[T], Sequence):
     """Singly Linked List implementation
 
     Attributes:
@@ -125,7 +137,8 @@ class SinglyLinkedList(LinkedList, Sequence):
          'index',          obj.index(ob)
     """
 
-    def __getitem__(self, item: int | slice) -> Any:
+    @no_type_check
+    def __getitem__(self, item: int | slice) -> "T":
         if not self:
             raise EmptyLinkedList()
 
@@ -194,7 +207,7 @@ class SinglyLinkedList(LinkedList, Sequence):
         self.head.next_item = former_head
         self._size += 1
 
-    def pop(self, index: Optional[int] = None):
+    def pop(self, index: Optional[int] = None) -> "T":
         """Pop the tail, or a desired index of sll"""
         if len(self) == 0:
             raise EmptyLinkedList()
@@ -230,9 +243,9 @@ class SinglyLinkedList(LinkedList, Sequence):
             after_node = self_node.next_item
             before_node.next_item = after_node
             self._size -= 1
-            return to_ret
+            return to_ret  # type: ignore
 
-    def popleft(self):
+    def popleft(self) -> "T":
         """Pop the head"""
         if self.head is None:
             raise EmptyLinkedList()
@@ -281,9 +294,10 @@ class SinglyLinkedList(LinkedList, Sequence):
         return f"{self.__class__.__name__}(head={self.head})"
 
 
+# TODO: finish CLL
 # Circularly LinkedList implementation
-class CircularlyLinkedList(SinglyLinkedList, Sequence):
-    def __init__(self, data: Optional[Any] = None):
+class CircularlyLinkedList(SinglyLinkedList["T"], Sequence):
+    def __init__(self, data: Optional[T] = None):
         super().__init__(data)
         if data is not None:
             self.tail.next_item = self.head
@@ -296,7 +310,7 @@ class CircularlyLinkedList(SinglyLinkedList, Sequence):
         super().appendleft(data)
         self.tail.next_item = self.head
 
-    def pop(self, index: Optional[int] = None):
+    def pop(self, index: Optional[int] = None) -> "T":
         """Pop the tail, or a desired index of sll"""
         if len(self) == 0:
             raise EmptyLinkedList()
@@ -330,7 +344,7 @@ class CircularlyLinkedList(SinglyLinkedList, Sequence):
 
             return to_ret
 
-    def popleft(self):
+    def popleft(self) -> "T":
         got = super().popleft()
         self.tail.next_item = self.head
         return got
@@ -339,7 +353,7 @@ class CircularlyLinkedList(SinglyLinkedList, Sequence):
 # Doubly LinkedList implementation
 
 
-class DNode(Node):
+class DNode(Node["T"]):
     """Class to create a two-way node
 
     each d-node is like:
@@ -358,7 +372,7 @@ class DNode(Node):
         return hash((self.data, self.prev_item, self.next_item))
 
 
-class DoublyLinkedList(LinkedList, Sequence):
+class DoublyLinkedList(LinkedList["T"], Sequence):
     """Doubly Linked List implementation
 
     Attributes:
@@ -405,7 +419,7 @@ class DoublyLinkedList(LinkedList, Sequence):
         former_head.prev_item = cast("DNode", self.head)
         self._size += 1
 
-    def pop(self, index: Optional[int] = None):
+    def pop(self, index: Optional[int] = None) -> "T":
         """Pop the tail"""
         if len(self) == 0:
             raise EmptyLinkedList()
@@ -424,7 +438,8 @@ class DoublyLinkedList(LinkedList, Sequence):
         self._size -= 1
         return former_tail.data
 
-    def popleft(self):
+    @no_type_check
+    def popleft(self) -> "T":
         """Pop the head"""
         if len(self) == 0:
             raise EmptyLinkedList()
@@ -439,7 +454,8 @@ class DoublyLinkedList(LinkedList, Sequence):
         self._size -= 1
         return former_head.data
 
-    def __getitem__(self, index: int | slice):
+    @no_type_check
+    def __getitem__(self, index: int | slice) -> "T":
         pass
 
     def __len__(self):
@@ -447,6 +463,22 @@ class DoublyLinkedList(LinkedList, Sequence):
 
     def __repr__(self):
         return f"{self.__class__.__name__}(head={self.head})"
+
+
+class StrSinglyLinkedList(SinglyLinkedList[str]):
+    pass
+
+
+class IntSinglyLinkedList(SinglyLinkedList[int]):
+    pass
+
+
+class StrDoublyLinkedList(DoublyLinkedList[str]):
+    pass
+
+
+class IntDoublyLinkedList(DoublyLinkedList[int]):
+    pass
 
 
 def _ensure_node(data: Any) -> "Node":
@@ -459,3 +491,6 @@ def _ensure_dnode(data: Any) -> "DNode":
     if isinstance(data, DNode):
         return data
     return DNode(data)
+
+
+# TODO: fix no_type_check mypy errors
