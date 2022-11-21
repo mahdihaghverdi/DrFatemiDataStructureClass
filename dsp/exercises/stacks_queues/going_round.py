@@ -30,11 +30,18 @@ class MyDeque(Generic[T], Collection):
         except IndexError:
             return -1
 
-    def enqueue(self, value: "T"):
+    def enqueue(self, value: "T") -> bool:
         if len(self._deque) < self.maxlen:
             self._deque.appendleft(value)
             return True
         return False
+
+    def dequeue(self) -> bool:
+        try:
+            self._deque.pop()
+            return True
+        except IndexError:
+            return False
 
     def __len__(self) -> int:
         return len(self._deque)

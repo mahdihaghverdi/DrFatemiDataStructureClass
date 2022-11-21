@@ -59,3 +59,16 @@ def test__contains__():
     _ = MyDeque(2, iterable="mz")
     assert "m" in _
     assert "zs" not in _
+
+
+def test_dequeue_empty():
+    _ = MyDeque(10)
+    assert _.dequeue() is False
+    assert not len(_)
+
+
+def test_dequeue():
+    _ = MyDeque(10, iterable=range(10))
+    assert _.dequeue() is True
+    assert _.front() == 8
+    assert len(_) == 9
