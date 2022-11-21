@@ -372,7 +372,7 @@ class DNode(Node["T"]):
         return hash((self.data, self.prev_item, self.next_item))
 
 
-class DoublyLinkedList(LinkedList["T"], Sequence):
+class DoublyLinkedList(LinkedList, Sequence, Generic[T]):
     """Doubly Linked List implementation
 
     Attributes:
