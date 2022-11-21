@@ -43,3 +43,19 @@ def test_enqueue_full():
     assert _.front() == 1
     assert _.enqueue(2) is False
     assert _.front() == 1
+
+
+def test__len__():
+    _ = MyDeque(1)
+    assert len(_) == 0
+
+
+def test__iter__():
+    _ = MyDeque(10, iterable=range(10))
+    assert list(_) == list(range(10))
+
+
+def test__contains__():
+    _ = MyDeque(2, iterable="mz")
+    assert "m" in _
+    assert "zs" not in _

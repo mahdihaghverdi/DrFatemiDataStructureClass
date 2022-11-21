@@ -1,11 +1,12 @@
 from collections import deque
-from typing import Any, Generic, Iterable, Optional, TypeVar, Union
+from collections.abc import Collection
+from typing import Any, Generic, Iterable, Iterator, Optional, TypeVar, Union
 
 T = TypeVar("T")
 
 
 #  deque -> (entrance [appendleft]) [1, 2, 3, 4, 5] (exit [pop])
-class MyDeque(Generic[T]):
+class MyDeque(Generic[T], Collection):
     def __init__(self, maxlen: int, /, iterable: Optional[Iterable] = None):
         self.maxlen: int = maxlen
         paras: dict[str, Any] = {"maxlen": maxlen}
@@ -34,6 +35,15 @@ class MyDeque(Generic[T]):
             self._deque.appendleft(value)
             return True
         return False
+
+    def __len__(self) -> int:
+        return len(self._deque)
+
+    def __iter__(self) -> Iterator[T]:
+        return iter(self._deque)
+
+    def __contains__(self, __x: object) -> bool:
+        return __x in self._deque
 
     def __repr__(self):
         return "MyDeque" + self._deque.__repr__()[5:]
