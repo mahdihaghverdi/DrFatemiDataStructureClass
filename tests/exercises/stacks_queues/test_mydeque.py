@@ -29,3 +29,17 @@ def test_rear():
 
     _ = MyDeque(10, iterable=range(5))
     assert _.rear() == 0
+
+
+def test_enqueue():
+    _ = MyDeque(3)
+    assert _.enqueue(1) is True
+    assert _.front() == 1
+
+
+def test_enqueue_full():
+    _ = MyDeque(1)
+    assert _.enqueue(1) is True
+    assert _.front() == 1
+    assert _.enqueue(2) is False
+    assert _.front() == 1

@@ -30,7 +30,10 @@ class MyDeque(Generic[T]):
             return -1
 
     def enqueue(self, value: "T"):
-        self._deque.appendleft(value)
+        if len(self._deque) < self.maxlen:
+            self._deque.appendleft(value)
+            return True
+        return False
 
     def __repr__(self):
         return "MyDeque" + self._deque.__repr__()[5:]
