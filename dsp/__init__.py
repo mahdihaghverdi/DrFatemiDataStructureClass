@@ -1,5 +1,5 @@
-from dsp.exercises.first.binarylinkcheat import do as blc_do
-from dsp.exercises.first.thebiggestcheat import do, get
+from dsp.exercises.arrays_linkedlists.binarylinkcheat import do as blc_do
+from dsp.exercises.arrays_linkedlists.thebiggestcheat import do, get
 
 from .datastructures.linkedlists import (
     CircularlyLinkedList,
@@ -14,5 +14,5 @@ from .datastructures.linkedlists import (
     StrSinglyLinkedList,
 )
 from .datastructures.stacks import IntStack, Stack, StrStack
-from .exercises.first.choice import SinglyLinkedList as CSinglyLinkedList
-from .exercises.second.ghostcost import do, max_sum, subseqs
+from .exercises.arrays_linkedlists.choice import SinglyLinkedList as CSinglyLinkedList
+from .exercises.time_complexity.ghostcost import do, max_sum, subseqs

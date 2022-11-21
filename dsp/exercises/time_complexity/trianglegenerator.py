@@ -38,5 +38,5 @@ def do():
     return three_nums(sum_)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(do())
