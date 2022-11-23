@@ -1,7 +1,7 @@
 import math
 from collections import deque
 from collections.abc import Collection
-from typing import Generic, Iterable, Iterator, Optional, TypeVar
+from typing import Generic, Iterable, Iterator, Optional, TypeVar, cast
 
 T = TypeVar("T")
 
@@ -45,9 +45,16 @@ class MySpecialQueue(Generic[T], Collection):
         else:
             pos = len(self) // 2
 
+        lasts = []
         for _ in range(len(self) - pos):
-            self._deque.pop()
-        return self._deque.pop()
+            lasts.append(self._deque.pop())
+        got = self._deque.pop()
+        for item in lasts[::-1]:
+            self.append(item)
+        return got
+
+    def output(self) -> str:
+        return " ".join(cast(str, num) for num in self) if len(self) else "-1"
 
     def __len__(self) -> int:
         return len(self._deque)

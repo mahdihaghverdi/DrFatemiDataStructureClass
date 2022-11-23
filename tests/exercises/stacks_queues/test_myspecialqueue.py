@@ -26,3 +26,4 @@ def test_popmiddle():
 
     _ = MySpecialQueue(range(1, 5))
     assert _.popmiddle() == 2
+    assert list(_) == [1, 3, 4]
