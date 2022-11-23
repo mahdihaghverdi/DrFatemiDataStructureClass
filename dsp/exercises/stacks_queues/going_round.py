@@ -59,8 +59,26 @@ class MyDeque(Generic[T], Collection):
         return "MyDeque" + str(self._deque)[5:]
 
 
+single_para_commands = {"Front", "Rear", "deQueue", "isEmpty", "isFull"}
+
+command_palette = {
+    "Front": MyDeque.front,  # self
+    "Rear": MyDeque.rear,  # self
+    "enQueue": MyDeque.enqueue,  # self, value
+    "deQueue": MyDeque.dequeue,  # self
+    "isEmpty": lambda obj: True if not len(obj) else False,  # self
+    "isFull": lambda obj: True if len(obj) == obj.maxlen else False,  # self
+}
+
 if __name__ == "__main__":
     size = int(input())
+    d: MyDeque[int] = MyDeque(size)
+
     command_count = int(input())
     for _ in range(command_count):
         command, *arg = input().split()
+        if command in single_para_commands:
+            print(str(command_palette[command](d)).lower())  # type: ignore
+        else:
+            # enQueue
+            print(str(command_palette[command](d, arg[-1])).lower())  # type: ignore
