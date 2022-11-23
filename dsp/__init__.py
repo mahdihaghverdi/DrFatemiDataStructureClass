@@ -16,4 +16,5 @@ from .datastructures.linkedlists import (
 from .datastructures.stacks import IntStack, Stack, StrStack
 from .exercises.arrays_linkedlists.choice import SinglyLinkedList as CSinglyLinkedList
 from .exercises.stacks_queues.going_round import MyDeque
+from .exercises.stacks_queues.qatar2022 import MySpecialQueue
 from .exercises.time_complexity.ghostcost import do, max_sum, subseqs
