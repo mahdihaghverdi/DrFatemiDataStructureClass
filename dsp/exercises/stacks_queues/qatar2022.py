@@ -1,7 +1,7 @@
 import math
 from collections import deque
 from collections.abc import Collection
-from typing import Generic, Iterable, Iterator, Optional, TypeVar, cast
+from typing import Any, Generic, Iterable, Iterator, Optional, TypeVar, Union, cast
 
 T = TypeVar("T")
 
@@ -19,11 +19,17 @@ class MySpecialQueue(Generic[T], Collection):
     def appendleft(self, value: "T"):
         self._deque.appendleft(value)
 
-    def pop(self) -> "T":
-        return self._deque.pop()
+    def pop(self) -> Union["T", None]:
+        try:
+            return self._deque.pop()
+        except IndexError:
+            return None
 
     def popleft(self) -> "T":
-        return self._deque.popleft()
+        try:
+            return self._deque.popleft()
+        except IndexError:
+            return None
 
     def appendmiddle(self, value: "T"):
         pos = len(self) // 2
@@ -39,7 +45,7 @@ class MySpecialQueue(Generic[T], Collection):
         for item in lasts[::-1]:
             self._deque.append(item)
 
-    def popmiddle(self) -> "T":
+    def popmiddle(self) -> Union["T", None]:
         if len(self) % 2 == 1:
             pos = math.ceil(len(self) / 2)
         else:
@@ -48,13 +54,20 @@ class MySpecialQueue(Generic[T], Collection):
         lasts = []
         for _ in range(len(self) - pos):
             lasts.append(self._deque.pop())
-        got = self._deque.pop()
+        try:
+            got = self._deque.pop()
+        except IndexError:
+            return None
         for item in lasts[::-1]:
             self.append(item)
         return got
 
     def output(self) -> str:
-        return " ".join(cast(str, num) for num in self) if len(self) else "-1"
+        return (
+            (" ".join(cast(str, num) for num in self) if len(self) else "-1")
+            if self
+            else "-1"
+        )
 
     def __len__(self) -> int:
         return len(self._deque)
@@ -67,3 +80,32 @@ class MySpecialQueue(Generic[T], Collection):
 
     def __repr__(self):
         return "MySpecialQueue" + self._deque.__repr__()[5:]
+
+
+push_palette = {
+    "PushFront": MySpecialQueue.appendleft,  # self, value
+    "PushMiddle": MySpecialQueue.appendmiddle,  # self, value
+    "PushBack": MySpecialQueue.append,  # self, value
+}
+
+pop_palette = {
+    "PopFront": MySpecialQueue.popleft,  # self
+    "PopMiddle": MySpecialQueue.popmiddle,  # self
+    "PopBack": MySpecialQueue.pop,  # self
+}
+
+
+def do(how_much: int):
+    msq: MySpecialQueue[str] = MySpecialQueue()
+    for _ in range(how_much):
+        command, *arg = input().split()
+        if command in push_palette:
+            push_palette[command](msq, arg[-1])
+        else:
+            pop_palette[command](msq)
+    return msq.output()
+
+
+if __name__ == "__main__":
+    count = int(input())
+    print(do(count))
