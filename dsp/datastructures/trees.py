@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic, Optional, Any
+from typing import Any, Generic, Optional, TypeVar, Union
 
 T = TypeVar("T")
 
@@ -16,8 +16,9 @@ class TreeNode(Generic[T]):
     def __init__(
         self,
         data: Optional["T"] = None,
+        *,
         parent: Optional["TreeNode[T]"] = None,
-        children: Optional[list["TreeNode[T]"] | T] = None,
+        children: Optional[list[Union["TreeNode[T]", "T"]]] = None,
     ):
         self.data = data
 
@@ -26,7 +27,9 @@ class TreeNode(Generic[T]):
         self.parent = parent
 
         if children is not None:
-            self.children = [_ensure_tree_node(child).make_child_of(self) for child in children]
+            self.children = [
+                _ensure_tree_node(child).make_child_of(self) for child in children
+            ]
         else:
             self.children = children
 
