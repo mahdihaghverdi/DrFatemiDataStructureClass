@@ -14,6 +14,7 @@ from .datastructures.linkedlists import (
     StrSinglyLinkedList,
 )
 from .datastructures.stacks import IntStack, Stack, StrStack
+from .datastructures.trees import TreeNode
 from .exercises.arrays_linkedlists.choice import SinglyLinkedList as CSinglyLinkedList
 from .exercises.stacks_queues.going_round import MyDeque
 from .exercises.stacks_queues.qatar2022 import MySpecialQueue
