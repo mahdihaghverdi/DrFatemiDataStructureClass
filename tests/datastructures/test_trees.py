@@ -9,8 +9,11 @@ class TestTreeNode:
         cls.data = 1
         cls.root_tree_node_no_child = TreeNode(data=cls.data)  # noqa
 
-        cls.children = [TreeNode(data=cls.data), TreeNode(cls.data)]  # noqa
-        cls.root_tree_node_with_children = TreeNode(data=cls.data, children=cls.children)  # noqa
+        cls.children = [TreeNode(cls.data), TreeNode(cls.data)]  # noqa
+        cls.root_tree_node_with_children = TreeNode(
+            data=cls.data,
+            children=cls.children,
+        )  # noqa
 
     def test_root_no_child_attrs(self):
         assert self.root_tree_node_no_child.data == self.data
@@ -26,3 +29,13 @@ class TestTreeNode:
         for child in self.root_tree_node_with_children.children:
             assert child.data == self.data
             assert child.parent == self.root_tree_node_with_children
+
+    def test__eq__(self):
+        assert self.root_tree_node_no_child != self.root_tree_node_with_children
+        assert TreeNode(data=self.data) == self.root_tree_node_no_child
+
+    def test__hash__(self):
+        assert hash(self.root_tree_node_no_child) == hash((self.data, None, None))
+        assert hash(self.root_tree_node_with_children) == hash(
+            (self.data, None, len(self.root_tree_node_with_children.children)),
+        )
