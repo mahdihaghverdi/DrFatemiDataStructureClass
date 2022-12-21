@@ -25,6 +25,8 @@ class TreeNode(Generic[T]):
         if parent is not None and not isinstance(parent, TreeNode):
             raise TypeError("Parent must be of type: `TreeNode`")
         self.parent = parent
+        if parent is not None:
+            parent.make_child_of(self)
 
         self.children = children
         if children is not None:
@@ -52,11 +54,21 @@ class TreeNode(Generic[T]):
         )
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(data={self.data}, parent={self.parent}, children={self.children})"
-
-    # def __repr_minimal__(self):
-    #     children = '[' + ', '.join(child.__repr_minimal__() for child in self.children) + ']'
-    #     return f'{self.__class__.__name__}(data={self.data}, parent={self.parent.__repr_minimal__()}, children={children})'
+        children = None
+        if self.children is not None:
+            children_classes = ", ".join(
+                [
+                    f"{child.__class__.__name__}(data={child.data})"
+                    for child in self.children
+                ],
+            )
+            children = f"[{children_classes}]"
+        return (
+            f"{self.__class__.__name__}"
+            f"(data={self.data}, "
+            f"parent={self.__class__.__name__}({self.parent.data}), "
+            f"children={children})"
+        )
 
 
 def _ensure_tree_node(data: Any) -> "TreeNode":
