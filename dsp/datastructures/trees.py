@@ -26,15 +26,15 @@ class TreeNode(Generic[T]):
             raise TypeError("Parent must be of type: `TreeNode`")
         self.parent = parent
         if parent is not None:
-            parent.make_child_of(self)
+            parent._make_child_of(self)
 
         self.children = children
         if children is not None:
             self.children = [
-                _ensure_tree_node(child).make_child_of(self) for child in children
+                _ensure_tree_node(child)._make_child_of(self) for child in children
             ]
 
-    def make_child_of(self, parent: "TreeNode[T]"):
+    def _make_child_of(self, parent: "TreeNode[T]"):
         """Make self a children of `parent` parameter"""
         if self == parent:
             raise ValueError("Cannot make itself a parent for itself")
