@@ -1,3 +1,4 @@
+from abc import ABC
 from typing import Any, Generic, Optional, TypeVar, Union
 
 T = TypeVar("T")
@@ -41,6 +42,14 @@ class TreeNode(Generic[T]):
         self.parent = parent
         return self
 
+    @property
+    def isinternal(self) -> bool:
+        return bool(self.children)
+
+    @property
+    def isexternal(self) -> bool:
+        return not self.children
+
     def __eq__(self, other):
         return (
             self.data == other.data
@@ -69,6 +78,30 @@ class TreeNode(Generic[T]):
             f"parent={self.__class__.__name__}({self.parent.data}), "
             f"children={children})"
         )
+
+
+class Tree(ABC):
+    """Abstract Base Implementation of all trees
+
+    In a general way trees have one root (a node which has no parent) and children and grandchildren and ...
+    Any node can have one parent and many children
+
+    Also trees share some common attributes like:
+      - len
+      - root
+      - internal nodes
+      - leaves
+      - height
+      - ancestors (of a node)
+      - descendants (of a node)
+      - depth (of a node)
+
+    And share some common behaviour:
+      - they are iterable
+      - some update methods
+    """
+
+    pass
 
 
 def _ensure_tree_node(data: Any) -> "TreeNode":
