@@ -1,6 +1,7 @@
 from dsp.exercises.arrays_linkedlists.binarylinkcheat import do as blc_do
 from dsp.exercises.arrays_linkedlists.thebiggestcheat import do, get
 
+from .datastructures.bintree import BinTree
 from .datastructures.linkedlists import (
     CircularlyLinkedList,
     DNode,
