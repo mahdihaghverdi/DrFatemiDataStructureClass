@@ -2,8 +2,8 @@ from typing import Dict, List, Optional, Union
 
 
 class BinTree:
-    def __init__(self, root=None):
-        self.root = root
+    def __init__(self, data=None):
+        self.data = data
         self._children: Dict[str, Optional["BinTree"]] = {
             "left": None,
             "right": None,
@@ -23,18 +23,18 @@ class BinTree:
 
     def addleft(self, node: "BinTree"):
         if self._children["left"] is not None:
-            raise ValueError(f"{self.root} already has a left child")
+            raise ValueError(f"{self.data} already has a left child")
 
         if node != "null":
             self._children["left"] = node
 
     def addright(self, node: "BinTree"):
         if self._children["right"] is not None:
-            raise ValueError(f"{self.root} already has a right child")
+            raise ValueError(f"{self.data} already has a right child")
         self._children["right"] = node
 
     def height(self) -> int:
-        if self.root is None:
+        if self.data is None:
             return 0
         try:
             left = self.left.height()
@@ -66,13 +66,12 @@ class BinTree:
             if v is None:
                 continue
             if k == "left" and (v.left is None and v.right is None):
-                data.append(v.root)
-            elif k == "right":
-                data += v.leftleaves()
+                data.append(v.data)
+            data += v.leftleaves()
         return data
 
     def __repr__(self):
-        return f"BinTree(root={self.root}, children={self.children})"
+        return f"BinTree(data={self.data}, children={self.children})"
 
 
 def _ensure_none(data: List[str]) -> List[Union[str, None]]:

@@ -49,11 +49,11 @@ class TestBinTree:
         _ = BinTree(0)
         _.addleft(BinTree(1))
         assert _.left
-        assert _.left.root == 1
+        assert _.left.data == 1
 
         _.addright(BinTree(2))
         assert _.right
-        assert _.right.root == 2
+        assert _.right.data == 2
 
         with pytest.raises(ValueError):
             _.addleft(BinTree(2))
