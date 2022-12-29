@@ -24,7 +24,9 @@ class BinTree:
     def addleft(self, node: "BinTree"):
         if self._children["left"] is not None:
             raise ValueError(f"{self.root} already has a left child")
-        self._children["left"] = node
+
+        if node != "null":
+            self._children["left"] = node
 
     def addright(self, node: "BinTree"):
         if self._children["right"] is not None:
@@ -44,3 +46,19 @@ class BinTree:
             right = 0
 
         return max((left, right)) + 1
+
+    @classmethod
+    def fromlist(cls, data: list, root: int = 0):
+        if not data:
+            raise ValueError("Empty list")
+
+        tree = None
+        if root < len(data):
+            if data[root] != "null":
+                tree = BinTree(data[root])
+                tree.addleft(cls.fromlist(data, 2 * root + 1))
+                tree.addright(cls.fromlist(data, 2 * root + 2))
+        return tree
+
+    def __repr__(self):
+        return f"BinTree(root={self.root}, children={self.children})"
